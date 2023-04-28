@@ -1,0 +1,13 @@
+{
+    "plug": "IdolMediaServer",
+    "host": "localhost",
+    "port": 8080,
+    "hostPort": 8082,
+    "mediaServerHost": "192.168.2.30",
+    "mediaServerPort": 14000,
+    "mediaServerCnfg": "surveillance",
+    "key": "1234563210",
+    "mode": "client",
+    "type": "detector",
+    "enabled": false
+}
