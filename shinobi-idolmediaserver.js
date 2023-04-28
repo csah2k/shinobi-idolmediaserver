@@ -144,6 +144,7 @@ function frameBufferToPath(d,buffer){
 }
 
 s.detectObject = async function(frameBuffer,d,tx,frameLocation,callback){
+	const startTime = new Date()
 	const records = await mediaServerProcess(d,frameBuffer)
 	if(records.length > 0) {
 		const mats = records.map(v => ({
@@ -166,8 +167,9 @@ s.detectObject = async function(frameBuffer,d,tx,frameLocation,callback){
 				name: `ObjectRecognizer`,
 				reason: 'object',
 				matrices: mats,
-				imgHeight: width,
-				imgWidth: height,
+				imgHeight: height,
+				imgWidth: width,
+				time: new Date() - startTime
 			},
 			frame: frameBuffer
 		})

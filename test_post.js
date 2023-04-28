@@ -45,6 +45,7 @@ const baseUrl = `http://${mediaServerHost}:${mediaServerPort}`
 const testImage1 = `/home/Shinobi/plugins/idol_mediaserver/sample.jpg`
 
 function mediaServerProcessFile(filePath){
+    console.time("POST time");
     try{
         console.log("SOURCE: ", filePath)
         let url = `${baseUrl}/a=Process`
@@ -86,6 +87,9 @@ function mediaServerProcessFile(filePath){
         })
         .catch((err) => {
             console.log(err);
+        })
+        .finally(() => {
+            console.timeEnd("POST time");
         });
     }catch(err){
         console.log(err)

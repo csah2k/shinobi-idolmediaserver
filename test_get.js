@@ -30,8 +30,9 @@ const baseUrl = `http://${mediaServerHost}:${mediaServerPort}`
 const testImage1 = `/idol/mediaserver/configurations/sample.jpg`
 
 function mediaServerProcessUrl(fileUrl){
+    console.time("GET time");
     try{
-        console.warn('WARNING: Source file must exists on media server machine')
+        console.log('WARNING: Source file must exists on media server machine')
         console.log("SOURCE: ", fileUrl)
         let url = `${baseUrl}/a=Process&ConfigName=${mediaServerCnfg}&Source=${fileUrl}&ResponseFormat=simplejson&Synchronous=True&Persist=False&Timeout=5s`
         console.log("QUERY: ", url)
@@ -61,6 +62,9 @@ function mediaServerProcessUrl(fileUrl){
         })
         .catch((err) => {
             console.log(err);
+        })
+        .finally(() => {
+            console.timeEnd("GET time");
         });
     }catch(err){
         console.log(err)

@@ -6,7 +6,7 @@
     "mediaServerHost": "192.168.2.30",
     "mediaServerPort": 14000,
     "mediaServerCnfg": "surveillance",
-    "key": "1234563210",
+    "key": "1234567890",
     "mode": "client",
     "type": "detector",
     "enabled": false
