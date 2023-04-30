@@ -17,3 +17,13 @@ if [ "$dontCreateKeyFlag" = false ]; then
 	echo "Adding Random Plugin Key to Main Configuration"
 	node $DIR/../../tools/modifyConfigurationForPlugin.js idolmediaserver key=$(head -c 64 < /dev/urandom | sha256sum | awk '{print substr($1,1,60)}')
 fi
+
+
+echo "Starting pm2 service"
+pm2 start $DIR/shinobi-idolmediaserver.js
+
+sleep 1
+echo "Saving pm2 startup"
+
+sleep 2
+pm2 save

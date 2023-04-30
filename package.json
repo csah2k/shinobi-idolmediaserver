@@ -16,12 +16,12 @@
    "addCmd": {
       "test-get": {
           "name": "test-get",
-          "title": "Test Action GET",
+          "title": "Test Action GetStatus",
           "cmd": "node test_get.js"
       },
       "test-post": {
          "name": "test-post",
-         "title": "Test Action POST",
+         "title": "Test Action Process",
          "cmd": "node test_post.js"
      }
   },

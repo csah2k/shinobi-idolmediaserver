@@ -40,7 +40,7 @@ if(!config.mediaServerCnfg){
 	console.log('set conf.json value for `mediaServerCnfg`')
 	return process.exit()
 }
-const baseUrl = `http://${mediaServerHost}:${mediaServerPort}`
+const baseUrl = `http://${mediaServerHost}:${mediaServerPort}/a=Process`
 
 const testImage1 = `/home/Shinobi/plugins/idol_mediaserver/sample.jpg`
 
@@ -48,8 +48,7 @@ function mediaServerProcessFile(filePath){
     console.time("POST time");
     try{
         console.log("SOURCE: ", filePath)
-        let url = `${baseUrl}/a=Process`
-        console.log("QUERY: ", url)
+        console.log("QUERY: ", baseUrl)
         const formData = new FormData();
         //formData.append('Config', mediaServerConfigData);
         formData.append('ConfigName', mediaServerCnfg);        
@@ -57,8 +56,8 @@ function mediaServerProcessFile(filePath){
         formData.append('ResponseFormat', 'simpleJson');
         formData.append('Synchronous', 'True');
         formData.append('Persist', 'False');
-        formData.append('Timeout', '5s');
-        fetch(url, {
+        formData.append('Timeout', '10s');
+        fetch(baseUrl, {
             method: 'POST',
             body: formData
         }).then(res => res.json())
@@ -67,18 +66,28 @@ function mediaServerProcessFile(filePath){
                 if (json.autnresponse.response == 'ERROR'){
                     console.error("ERROR:", json.autnresponse.responsedata.error)
                 }else{
-                    const output = json.autnresponse.responsedata.output
-                    const records = output.record.map(r => r.ObjectClassRecognitionResult)
-                    console.log("RECORDS: ", records)
-                    const mats = records.map(v => ({
-                        x: parseInt(v.region.left),
-                        y: parseInt(v.region.top),
-                        width: parseInt(v.region.width),
-                        height: parseInt(v.region.height),
+                    const records = json.autnresponse.responsedata.output.record
+                    var width = 0, height = 0 
+                    try{
+                        const stream = records.filter(r => r.ProxyData != undefined)[0].ProxyData.streams.videoStream
+                        width = parseFloat(stream['@width']) 
+                        height = parseFloat(stream['@height']) 
+                    }catch(err){
+                        console.error("Missing a 'Source.Proxy' track to the response output:", err)
+                    }
+                    const matrices = records.filter(r => r.ObjectClassRecognitionResult != undefined).map(r => r.ObjectClassRecognitionResult).map(v => ({
+                        x: parseFloat(v.region.left),
+                        y: parseFloat(v.region.top),
+                        width: parseFloat(v.region.width),
+                        height: parseFloat(v.region.height),
                         tag: v.classification.identifier,
                         confidence: parseFloat(v.classification.confidence),
-                      }));
-                    console.log("MATS: ", mats)
+                        }))
+                    console.log("RESULT:", {
+                        matrices: matrices,
+                        imgHeight: height,
+                        imgWidth: width
+                    })
                 }
             }catch(err){
                 console.log(json)
