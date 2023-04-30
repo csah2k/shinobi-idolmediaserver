@@ -50,9 +50,9 @@ Here is a sample of a Host configuration for the plugin.
 {
     "plug": "IdolMediaServer",
     "hostPort": 8082,
-    "mediaserver_host": "192.168.2.30",
-    "mediaserver_port": 14000,
-    "mediaserver_cnfg": "surveillance",
+    "mediaServerHost": "192.168.2.30",
+    "mediaServerPort": 14000,
+    "mediaServerCnfg": "surveillance",
     "key": "1234567890",
     "mode": "client",
     "type": "detector"

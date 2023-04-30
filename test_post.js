@@ -52,7 +52,7 @@ function mediaServerProcessFile(filePath){
         const formData = new FormData();
         //formData.append('Config', mediaServerConfigData);
         formData.append('ConfigName', mediaServerCnfg);        
-        formData.append('SourceData', fs.createReadStream(filePath), { filename: 'sample.jpg' });
+        formData.append('SourceData', fs.createReadStream(filePath), { filename: `12345_${new Date().getTime()}.jpg` });
         formData.append('ResponseFormat', 'simpleJson');
         formData.append('Synchronous', 'True');
         formData.append('Persist', 'False');

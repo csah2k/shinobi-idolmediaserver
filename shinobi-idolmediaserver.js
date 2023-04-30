@@ -89,7 +89,7 @@ function mediaServerProcess(d,frameBuffer){
 			frameBufferToPath(d,frameBuffer).then((filePath) => {
 				const formData = new FormData();
 				formData.append('ConfigName', mediaServerCnfg);        
-				formData.append('SourceData', fs.createReadStream(filePath), { filename: 'sample.jpg' });
+				formData.append('SourceData', fs.createReadStream(filePath), { filename: `${d.id}_${new Date().getTime()}.jpg` });
 				formData.append('ResponseFormat', 'simpleJson');
 				formData.append('Synchronous', 'True');
 				formData.append('Persist', 'False');

@@ -15,7 +15,9 @@ fi
 
 if [ "$dontCreateKeyFlag" = false ]; then
 	echo "Adding Random Plugin Key to Main Configuration"
-	node $DIR/../../tools/modifyConfigurationForPlugin.js idolmediaserver key=$(head -c 64 < /dev/urandom | sha256sum | awk '{print substr($1,1,60)}')
+    key=$(head -c 64 < /dev/urandom | sha256sum | awk '{print substr($1,1,60)}')
+    echo "KEY=$key"
+	node $DIR/../../tools/modifyConfigurationForPlugin.js idolmediaserver key=$key
 fi
 
 
